@@ -5,8 +5,7 @@ FROM husarnet/ros:${PREFIX}${ROS_DISTRO}-ros-core
 
 RUN apt update && apt install -y \
       ros-${ROS_DISTRO}-v4l2-camera \
-      ros-${ROS_DISTRO}-image-transport-plugins \
-      ros-${ROS_DISTRO}-image-proc && \
+      ros-${ROS_DISTRO}-image-transport-plugins && \
     apt clean &&  \
     rm -rf /var/lib/apt/lists/*
 
