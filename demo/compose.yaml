@@ -1,0 +1,28 @@
+services:
+
+  camera:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    devices:
+      - /dev/video2:/dev/video0
+    volumes:
+      - ./logitech_webcam_c930e.yaml:/root/.ros/camera_info/logitech_webcam_c930e.yaml
+    command: >
+      ros2 run v4l2_camera v4l2_camera_node
+        --ros-args 
+        -p video_device:=/dev/video0
+        -p pixel_format:=YUYV
+        -p output_encoding:=yuv422_yuy2
+        -p image_size:="[640,480]" 
+        -p camera_frame_id:=camera_optical_link
+
+  rviz:
+    image: husarion/rviz2:humble-11.2.6
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./default.rviz:/root/.rviz2/default.rviz
+    environment:
+      - DISPLAY=${DISPLAY:?err}
+      - LIBGL_ALWAYS_SOFTWARE=1
+

@@ -1,0 +1,33 @@
+services:
+
+  camera:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    devices:
+      - /dev/video2:/dev/video0
+    command: >
+      ros2 run v4l2_camera v4l2_camera_node
+        --ros-args 
+        -p video_device:=/dev/video0
+        -p pixel_format:=YUYV
+        -p output_encoding:=yuv422_yuy2
+        -p image_size:="[640,480]" 
+        -p camera_frame_id:=camera_optical_link
+
+  calibration:
+    build:
+      context: ../
+      dockerfile: Dockerfile.calibration
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./calibration:/tmp
+    environment:
+      - DISPLAY=${DISPLAY:?err}
+      - LIBGL_ALWAYS_SOFTWARE=1
+    # It takes a while to start
+    command: ros2 run camera_calibration cameracalibrator --size 7x9 --square 0.02 --ros-args -r image:=/image_raw
+    # command: sleep 3600
+
+
+
