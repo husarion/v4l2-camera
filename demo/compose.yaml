@@ -8,6 +8,7 @@ services:
       - /dev/video0:/dev/video0
     volumes:
       - ./logitech_webcam_c930e.yaml:/root/.ros/camera_info/default_cam.yaml
+      - ./camera_launch.py:/camera_launch.py
     # command: >
     #   ros2 run v4l2_camera v4l2_camera_node
     #     --ros-args 
