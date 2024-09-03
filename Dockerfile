@@ -24,8 +24,6 @@ RUN apt update && \
 # Build the workspace
 RUN apt update && \
     rosdep install --from-paths src --ignore-src --rosdistro=${ROS_DISTRO} -y  && \
-    # Remove unnecessary build packages for the final image
-    sed -i '/pkg-config\|ros-environment\|ament/d' /rosdep_install.sh && \
     source /opt/ros/${ROS_DISTRO}/setup.bash && \
     colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release && \
     rm -rf build log src
