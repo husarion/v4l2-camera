@@ -17,14 +17,23 @@ services:
     #     -p output_encoding:=yuv422_yuy2
     #     -p image_size:="[640,480]" 
     #     -p camera_frame_id:=camera_optical_link
-    command: tail -f /dev/null
+    # command: tail -f /dev/null
+    command: ros2 run usb_cam usb_cam_node_exe
 
-  rviz:
-    image: husarion/rviz2:humble-11.2.6
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ./default.rviz:/root/.rviz2/default.rviz
-    environment:
-      - DISPLAY=${DISPLAY:?err}
-      - LIBGL_ALWAYS_SOFTWARE=1
+  foxglove-bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile.foxglove-bridge
+    ports:
+      - 8766:8766
+    command: ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8766
+
+  # rviz:
+  #   image: husarion/rviz2:humble-11.2.6
+  #   volumes:
+  #     - /tmp/.X11-unix:/tmp/.X11-unix:rw
+  #     - ./default.rviz:/root/.rviz2/default.rviz
+  #   environment:
+  #     - DISPLAY=${DISPLAY:?err}
+  #     - LIBGL_ALWAYS_SOFTWARE=1
 
