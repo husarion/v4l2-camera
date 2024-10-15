@@ -6,9 +6,13 @@ services:
       dockerfile: Dockerfile
     devices:
       - /dev/video0:/dev/video0
+    # runtime: nvidia
     volumes:
       - ./logitech_webcam_c930e.yaml:/root/.ros/camera_info/default_cam.yaml
       - ./camera_launch.py:/camera_launch.py
+      - ./params/camera_params.yaml:/camera_params.yaml
+      - ./params/ffmpeg_params.yaml:/ffmpeg_params.yaml
+
     # command: >
     #   ros2 run v4l2_camera v4l2_camera_node
     #     --ros-args 
@@ -18,7 +22,8 @@ services:
     #     -p image_size:="[640,480]" 
     #     -p camera_frame_id:=camera_optical_link
     # command: tail -f /dev/null
-    command: ros2 run usb_cam usb_cam_node_exe
+    # command: ros2 run usb_cam usb_cam_node_exe
+    command: ros2 launch /camera_launch.py
 
   foxglove-bridge:
     build:
