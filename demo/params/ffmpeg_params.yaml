@@ -9,4 +9,7 @@
       
       # find the list of available presets by running `ffmpeg -h encoder=libx264`
       preset: ultrafast
+      # preset: veryslow
       tune: zerolatency
+      # gop_size: 100
+      # profile: high444

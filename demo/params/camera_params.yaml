@@ -22,8 +22,13 @@
       exposure: 100
       autofocus: false
       focus: -1
+      # foxglove:
+      #   enconding: "libx264"
+      #   preset: "ultrafast"
+      #   tune: "zerolatency"
       image_raw:
         foxglove:
-          enconding: "libx264"
+          encoding: "libx264"
+          profile: "main"
           preset: "ultrafast"
           tune: "zerolatency"

@@ -33,18 +33,26 @@ FROM husarnet/ros:${PREFIX}${ROS_DISTRO}-ros-core
 COPY --from=build /ros2_ws /ros2_ws
 COPY --from=build /rosdep_install.sh /rosdep_install.sh
 
+# RUN apt update && \
+#     /rosdep_install.sh && \
+#     apt install -y \
+#       ffmpeg \
+#       libpulse-dev \
+#       libblas3 \
+#       libjpeg-turbo8-dev \
+#       ros-${ROS_DISTRO}-usb-cam \
+#       ros-${ROS_DISTRO}-cv-bridge \
+#       ros-${ROS_DISTRO}-image-transport \
+#       ros-${ROS_DISTRO}-image-transport-plugins \
+#       ros-${ROS_DISTRO}-ffmpeg-image-transport && \
+#     apt clean &&  \
+#     rm -rf /var/lib/apt/lists/*
+
 RUN apt update && \
     /rosdep_install.sh && \
     apt install -y \
       ffmpeg \
-      libpulse-dev \
-      libblas3 \
-      libjpeg-turbo8-dev \
-      ros-${ROS_DISTRO}-usb-cam \
-      ros-${ROS_DISTRO}-cv-bridge \
-      ros-${ROS_DISTRO}-image-transport \
-      ros-${ROS_DISTRO}-image-transport-plugins \
-      ros-${ROS_DISTRO}-ffmpeg-image-transport && \
+      ros-${ROS_DISTRO}-usb-cam && \
     apt clean &&  \
     rm -rf /var/lib/apt/lists/*
 

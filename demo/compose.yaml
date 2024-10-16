@@ -11,7 +11,8 @@ services:
       - ./logitech_webcam_c930e.yaml:/root/.ros/camera_info/default_cam.yaml
       - ./camera_launch.py:/camera_launch.py
       - ./params/camera_params.yaml:/camera_params.yaml
-      - ./params/ffmpeg_params.yaml:/ffmpeg_params.yaml
+      - ./cam.launch.py:/ros2_ws/install/foxglove_compressed_video_transport/share/foxglove_compressed_video_transport/launch/cam.launch.py
+      # - ./params/ffmpeg_params.yaml:/ffmpeg_params.yaml
 
     # command: >
     #   ros2 run v4l2_camera v4l2_camera_node
@@ -23,7 +24,18 @@ services:
     #     -p camera_frame_id:=camera_optical_link
     # command: tail -f /dev/null
     # command: ros2 run usb_cam usb_cam_node_exe
-    command: ros2 launch /camera_launch.py
+    # command: ros2 launch /camera_launch.py
+    # command: >
+    #   ros2 run usb_cam usb_cam_node_exe
+    #     --ros-args
+    #     -p params_file:=/camera_params.yaml
+    #     -p video_device:=/dev/video0
+    command: ros2 launch foxglove_compressed_video_transport cam.launch.py
+    # command: >
+    #   ros2 run usb_cam usb_cam_node_exe
+    #     --ros-args
+    #     -p params_file:=/camera_params.yaml
+    #     -p video_device:=/dev/video0
 
   foxglove-bridge:
     build:
